@@ -1,0 +1,42 @@
+name: Installer ISO
+on:
+  workflow_dispatch:
+
+jobs:
+  iso:
+    runs-on: ubuntu-24.04
+    permissions:
+      packages: write
+
+    env:
+      BUILD_REGISTRY: ghcr.io/${{ github.repository_owner }}
+      BUILD_IMAGE: container
+      BUILD_BRANCH: 44
+      BUILD_TAG: 44
+
+    steps:
+      - uses: actions/checkout@v6
+      - uses: extractions/setup-just@v4
+
+      - name: Pull
+        id: pull
+        run: |
+          sudo podman pull "${BUILD_REGISTRY}/${BUILD_IMAGE}:${BUILD_TAG}"
+
+      - name: Prepare interactive
+        id: prepare
+        run: |
+          just prepare_interactive
+
+      - name: Build installer image
+        id: disk
+        run: |
+          just disk
+          sudo cp output/bootiso/install.iso ./${BUILD_IMAGE}-${BUILD_TAG}.iso
+          sudo chown $(id -u):$(id -g) ./${BUILD_IMAGE}-${BUILD_TAG}.iso
+
+      - name: Upload artefacts
+        uses: actions/upload-artifact@v7
+        with:
+          name: ${{ env.BUILD_IMAGE }}-${{ env.BUILD_TAG }}
+          path: ${{ env.BUILD_IMAGE }}-${{ env.BUILD_TAG }}.iso
