@@ -3,8 +3,8 @@ COPY build_files /build_files
 
 FROM quay.io/fedora/fedora-bootc:44
 
-COPY rootfiles/etc /etc
-COPY rootfiles/usr /usr
+COPY rootfiles/sshd/* /etc/ssh/sshd_config.d/
+COPY rootfiles/firewalld/* /usr/lib/firewalld/zones/
 
 COPY quadlets/pasarguard /usr/share/containers/systemd/users
 
