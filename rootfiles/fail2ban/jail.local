@@ -1,0 +1,5 @@
+[sshd]
+enabled = true
+port=1022
+bantime = 1d
+maxretry = 3
