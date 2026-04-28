@@ -4,6 +4,9 @@ set -uexo pipefail
 
 sed -i 's|#LockLayering.*|LockLayering=true|' /etc/rpm-ostreed.conf
 
+dnf copr enable neilalexander/yggdrasil-go
+dnf -y intsall yggdrasil
+
 dnf -y install qemu-guest-agent
 
 dnf -y install zram-generator-defaults
