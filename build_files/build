@@ -4,6 +4,7 @@ set -uexo pipefail
 
 sed -i 's|#LockLayering.*|LockLayering=true|' /etc/rpm-ostreed.conf
 
+dnf install 'dnf5-command(copr)'
 dnf copr enable neilalexander/yggdrasil-go
 dnf -y intsall yggdrasil
 systemctl enable yggdrasil.service
