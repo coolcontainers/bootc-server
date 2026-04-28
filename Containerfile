@@ -3,6 +3,7 @@ COPY build_files /build_files
 
 FROM quay.io/fedora/fedora-bootc:44
 
+COPY rootfiles/fail2ban/* /etc/fail2ban/
 COPY rootfiles/sshd/* /etc/ssh/sshd_config.d/
 COPY rootfiles/firewalld/* /usr/lib/firewalld/zones/
 
