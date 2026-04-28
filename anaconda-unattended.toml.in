@@ -1,0 +1,5 @@
+[[customizations.user]]
+name = "@USERNAME@"
+password = "@PASSWORD@"
+groups = ["wheel"]
+key = "@PUBKEY@"
