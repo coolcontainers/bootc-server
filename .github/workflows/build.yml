@@ -18,6 +18,9 @@ jobs:
 
     steps:
       - uses: actions/checkout@v6
+        with:
+          token: ${{ github.token }}
+
       - uses: extractions/setup-just@v4
 
       - name: Pull
