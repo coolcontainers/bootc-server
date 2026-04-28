@@ -1,0 +1,15 @@
+[Unit]
+Description=PasarGuard panel container
+
+[Container]
+ContainerName=pasarguard
+Image=pasarguard/panel:v3.0.2
+Network=host
+EnvironmentFile=%h/.config/pasarguard.env
+Volume=pasarguard-volume.volume:/var/lib/pasarguard:Z
+
+[Service]
+Restart=always
+
+[Install]
+WantedBy=default.target

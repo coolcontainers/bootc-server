@@ -1,0 +1,4 @@
+[Unit]
+Description=PasarGuard Node data
+
+[Volume]
