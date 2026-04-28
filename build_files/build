@@ -6,7 +6,7 @@ sed -i 's|#LockLayering.*|LockLayering=true|' /etc/rpm-ostreed.conf
 
 dnf copr enable neilalexander/yggdrasil-go
 dnf -y intsall yggdrasil
-systemctl enable fail2ban.service
+systemctl enable yggdrasil.service
 
 dnf -y install qemu-guest-agent
 
