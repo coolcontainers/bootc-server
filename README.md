@@ -12,16 +12,16 @@ Build an interactive Anaconda installer ISO image:
 
 ```bash
 just prepare_interactive
-sudo podman pull ghcr.io/teackot/srv:44
-sudo just registry=ghcr.io/teackot image=srv tag=44 disk
+sudo podman pull ghcr.io/devil-star-cat/container:44
+sudo just registry=ghcr.io/devil-star-cat image=container tag=44 disk
 ```
 
 Build an unattended Anaconda installer ISO image:
 
 ```bash
 just prepare_unattended user defaultpassword "ssh-ed25519 abcdef123456..."
-sudo podman pull ghcr.io/teackot/srv:44
-sudo just registry=ghcr.io/teackot image=srv tag=44 disk_type=anaconda-iso disk
+sudo podman pull ghcr.io/devil-star-cat/container:44
+sudo just registry=ghcr.io/devil-star-cat image=container tag=44 disk_type=anaconda-iso disk
 ```
 
 ### Known issues
