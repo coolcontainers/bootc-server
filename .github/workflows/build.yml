@@ -6,7 +6,7 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     permissions:
       packages: write
       contents: read
@@ -49,13 +49,6 @@ jobs:
         run: |
           echo "${GITHUB_TOKEN}" | sudo podman login -u "${LOGIN_USER}" --password-stdin "ghcr.io"
 
-      # TODO: remove me when we have a new podman in 26.04 runners
-      # needed because old podman doesn't push layer annotations for
-      # the rpm-ostree rechunker at all
-      - name: Install Podman from Brew
-        run: |
-          /home/linuxbrew/.linuxbrew/bin/brew install podman
-
       - name: Push to GHCR
         id: push
         env:
@@ -68,9 +61,9 @@ jobs:
           # HACK: push a second time so layer annotations are present
           # TODO: remove me when https://github.com/containers/podman/issues/27796 fixed
           for i in $(seq "${MAX_RETRIES}"); do
-            sudo /home/linuxbrew/.linuxbrew/bin/podman push "$REGISTRY/$IMAGE:$TAG" && break || sleep $((5 * i));
+            sudo podman push "$REGISTRY/$IMAGE:$TAG" && break || sleep $((5 * i));
           done
 
           for i in $(seq "${MAX_RETRIES}"); do
-            sudo /home/linuxbrew/.linuxbrew/bin/podman push "$REGISTRY/$IMAGE:$TAG" && break || sleep $((5 * i));
+            sudo podman push "$REGISTRY/$IMAGE:$TAG" && break || sleep $((5 * i));
           done
