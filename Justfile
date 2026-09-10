@@ -18,19 +18,37 @@ bib_config := env("BUILD_BIB_CONFIG", "./bootc-image-builder.toml")
 rootfs := env("BUILD_ROOTFS", "btrfs")
 
 [private]
-pull-base *ARGS:
-    podman pull {{ARGS}} {{base}}
+pull-image name:
+    #!/usr/bin/env bash
+    set -xeuo pipefail
+
+    # retry 3 times
+    n=0
+    until [ "$n" -ge 3 ]; do
+        podman pull {{name}} && break
+        n=$((n+1))
+        sleep 10
+    done
+
+    if [ "$n" -ge 3 ]; then
+        exit 1
+    fi
 
 [private]
-pull-chunkah *ARGS:
-    podman pull {{ARGS}} quay.io/coreos/chunkah
+pull-container *ARGS:
+    #!/usr/bin/env bash
+    set -xeuo pipefail
 
-[private]
-pull-img *ARGS:
-    podman pull {{ARGS}} {{registry}}/{{image}}:{{tag}}
+    if skopeo inspect docker://{{registry}}/{{image}}:{{tag}} >/dev/null 2>&1; then
+        just pull-image {{registry}}/{{image}}:{{tag}}
+    else
+        just pull-image {{base}}
+        podman tag {{base}} {{registry}}/{{image}}:{{tag}}
+    fi
+
 
 [parallel]
-pull *ARGS: (pull-base ARGS) (pull-chunkah ARGS) (pull-img ARGS)
+pull: (pull-image base) (pull-image 'quay.io/coreos/chunkah') pull-container
 
 build *ARGS:
     buildah bud \
