@@ -10,6 +10,7 @@ dnf -y install qemu-guest-agent
 dnf -y install zram-generator-defaults
 dnf -y install tmux vim fish
 
-for m in /ctx/profiles/${BUILD_PROFILE}/*/ ; do
-    env --chdir="$m" ./build
+modules=$(ls -1 /ctx/profiles/${BUILD_PROFILE}/)
+for m in $modules ; do
+    env --chdir="/ctx/modules/$m" ./build
 done
