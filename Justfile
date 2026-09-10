@@ -1,7 +1,7 @@
 # container image build vars
 
 registry := env("BUILD_REGISTRY", "localhost")
-image := env("BUILD_IMAGE", "container")
+image := env("BUILD_IMAGE", "bootc-server")
 
 branch := env("BUILD_BRANCH", "44")
 tag := env("BUILD_TAG", branch)
