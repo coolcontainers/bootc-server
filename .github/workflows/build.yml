@@ -43,6 +43,10 @@ jobs:
           LOGIN_USER: ${{ github.actor }}
         run: |
           echo "${GITHUB_TOKEN}" | sudo podman login -u "${LOGIN_USER}" --password-stdin "ghcr.io"
+          echo "${GITHUB_TOKEN}" | docker login -u "${LOGIN_USER}" --password-stdin "ghcr.io" # for cosign
+
+      - name: Install Cosign
+        uses: sigstore/cosign-installer@v4.1.1
 
       - name: Push to GHCR
         id: push
@@ -56,9 +60,16 @@ jobs:
           # HACK: push a second time so layer annotations are present
           # TODO: remove me when https://github.com/containers/podman/issues/27796 fixed
           for i in $(seq "${MAX_RETRIES}"); do
-            sudo podman push "$REGISTRY/$IMAGE:$TAG" && break || sleep $((5 * i));
+            sudo podman push --digestfile=/tmp/digestfile "$REGISTRY/$IMAGE:$TAG" && break || sleep $((5 * i));
           done
 
           for i in $(seq "${MAX_RETRIES}"); do
-            sudo podman push "$REGISTRY/$IMAGE:$TAG" && break || sleep $((5 * i));
+            sudo podman push --digestfile=/tmp/digestfile "$REGISTRY/$IMAGE:$TAG" && break || sleep $((5 * i));
           done
+
+          echo "digest=$(< /tmp/digestfile)" | tee "${GITHUB_OUTPUT}"
+
+      - name: Sign with cosign
+        env:
+          SIGNING_KEY: ${{ secrets.SIGNING_KEY }}
+        run: just sign "${{ steps.push.outputs.digest }}"

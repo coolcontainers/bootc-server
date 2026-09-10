@@ -1,0 +1,3 @@
+docker:
+  ghcr.io/devil-star-cat/container:
+    use-sigstore-attachments: true

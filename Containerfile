@@ -6,6 +6,8 @@ COPY modules /modules
 
 FROM quay.io/fedora/fedora-bootc:44 as builder
 
+COPY cosign.pub /etc/pki/containers/container.pub
+
 RUN --mount=type=bind,from=ctx,source=/build_files,target=/ctx \
     --mount=type=bind,from=ctx,source=/modules,target=/ctx/modules \
     --mount=type=cache,target=/var/cache \
