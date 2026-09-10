@@ -3,13 +3,10 @@ Description=PasarGuard panel container
 
 [Container]
 ContainerName=pasarguard
-Image=pasarguard/panel:v3.0.2
-Network=host
+Image=docker.io/pasarguard/panel:v5.1.0
+Pod=pasarguard.pod
 EnvironmentFile=%h/.config/pasarguard.env
-Volume=pasarguard-volume.volume:/var/lib/pasarguard:Z
+Volume=pasarguard-volume.volume:/var/lib/pasarguard
 
 [Service]
 Restart=always
-
-[Install]
-WantedBy=default.target

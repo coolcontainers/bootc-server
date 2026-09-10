@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+set -xeuo pipefail
+
+install -Dm600 10-REMOVEME_allow_password_auth.conf -t /etc/ssh/sshd_config.d
+install -Dm600 20-deny_root.conf -t /etc/ssh/sshd_config.d
+install -Dm600 20-force_publickey_auth.conf -t /etc/ssh/sshd_config.d
+install -Dm600 20-port.conf -t /etc/ssh/sshd_config.d
+
+# to fend off lazy botnets probing the 22nd port
+semanage port -a -t ssh_port_t -p tcp 1022

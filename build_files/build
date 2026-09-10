@@ -10,14 +10,9 @@ dnf -y install yggdrasil
 systemctl enable yggdrasil.service
 
 dnf -y install qemu-guest-agent
-
 dnf -y install zram-generator-defaults
-
-dnf -y install firewalld fail2ban
-systemctl enable fail2ban.service
-sed -i 's|DefaultZone=public|DefaultZone=custom|' /etc/firewalld/firewalld.conf
-
 dnf -y install tmux vim fish
 
-# to fend off lazy botnets probing the 22nd port
-semanage port -a -t ssh_port_t -p tcp 1022
+for m in /ctx/modules/*/ ; do
+    env --chdir="$m" ./build
+done

@@ -1,0 +1,5 @@
+[Pod]
+Network=host
+
+[Install]
+WantedBy=default.target

@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+set -xeuo pipefail
+
+dnf -y install firewalld
+
+install -Dm644 custom.xml -t /usr/lib/firewalld/zones
+firewall-offline-cmd --set-default-zone custom
