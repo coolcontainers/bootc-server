@@ -6,7 +6,6 @@ on:
 
 jobs:
   build-all:
-    runs-on: ubuntu-26.04
     secrets: inherit
     permissions:
       packages: write

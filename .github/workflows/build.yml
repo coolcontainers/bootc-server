@@ -21,6 +21,7 @@ jobs:
       BUILD_IMAGE: ${{ inputs.profile }}-bootc
       BUILD_BRANCH: 44
       BUILD_TAG: 44
+      BUILD_PROFILE: ${{ inputs.profile }}
 
     steps:
       - uses: actions/checkout@v6
