@@ -13,6 +13,7 @@ COPY cosign.pub /etc/pki/containers/container.pub
 
 RUN --mount=type=bind,from=ctx,source=/build_files,target=/ctx \
     --mount=type=bind,from=ctx,source=/modules,target=/ctx/modules \
+    --mount=type=bind,from=ctx,source=/profiles,target=/ctx/profiles \
     --mount=type=cache,target=/var/cache \
     /ctx/build && \
     /ctx/cleanup && \
