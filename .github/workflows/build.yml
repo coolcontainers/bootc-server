@@ -1,13 +1,15 @@
 name: Build
 on:
   workflow_dispatch:
-    profile:
-      required: true
-      type: string
+    inputs:
+      profile:
+        required: true
+        type: string
   workflow_call:
-    profile:
-      required: true
-      type: string
+    inputs:
+      profile:
+        required: true
+        type: string
 
 jobs:
   build:
