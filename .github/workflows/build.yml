@@ -1,8 +1,13 @@
 name: Build
 on:
   workflow_dispatch:
-  schedule:
-    - cron: '0 12 * * *'
+    profile:
+      required: true
+      type: string
+  workflow_call:
+    profile:
+      required: true
+      type: string
 
 jobs:
   build:
@@ -12,16 +17,12 @@ jobs:
       contents: read
 
     env:
-      REPO_OWNER: ${{ github.repository_owner }}
-      BUILD_IMAGE: container
+      BUILD_REGISTRY: ghcr.io/${{ github.repository_owner }}
+      BUILD_IMAGE: ${{ inputs.profile }}-bootc
       BUILD_BRANCH: 44
       BUILD_TAG: 44
 
     steps:
-      - name: Prepare environment
-        run: |
-          echo "BUILD_REGISTRY=ghcr.io/${REPO_OWNER,,}" >> ${GITHUB_ENV}
-
       - uses: actions/checkout@v6
         with:
           token: ${{ github.token }}

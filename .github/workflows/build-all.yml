@@ -1,0 +1,22 @@
+name: Build all profiles
+on:
+  workflow_dispatch: {}
+  schedule:
+    - cron: '0 12 * * *'
+
+jobs:
+  build-all:
+    runs-on: ubuntu-26.04
+    secrets: inherit
+    permissions:
+      packages: write
+      contents: read
+
+    strategy:
+      fail-fast: false
+      matrix:
+        profile: ['proxy', 'rpi']
+
+    uses: ./.github/workflows/build.yml
+    with:
+      profile: ${{ matrix.profile }}
