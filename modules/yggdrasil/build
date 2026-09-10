@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+set -xeuo pipefail
+
+dnf -y copr enable neilalexander/yggdrasil-go
+dnf -y install yggdrasil
+systemctl enable yggdrasil.service
