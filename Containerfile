@@ -1,4 +1,5 @@
 ARG CHUNKAH_CONFIG_STR
+ARG BUILD_PROFILE
 
 FROM scratch AS ctx
 COPY build_files /build_files
@@ -6,6 +7,7 @@ COPY modules /modules
 COPY profiles /profiles
 
 FROM quay.io/fedora/fedora-bootc:44 as builder
+ARG BUILD_PROFILE
 
 COPY cosign.pub /etc/pki/containers/container.pub
 

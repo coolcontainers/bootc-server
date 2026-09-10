@@ -8,6 +8,8 @@ tag := env("BUILD_TAG", branch)
 
 base := env("BUILD_BASE", "quay.io/fedora/fedora-bootc:" + branch)
 
+profile := env("BUILD_PROFILE", "proxy")
+
 # disk image build vars
 
 bib := env("BUILD_BIB", "quay.io/centos-bootc/bootc-image-builder:latest")
@@ -35,6 +37,7 @@ build *ARGS:
         --layers=true \
         --skip-unused-stages=false \
         --build-arg="CHUNKAH_CONFIG_STR=$(podman inspect {{registry}}/{{image}}:{{tag}})" \
+        --build-arg="BUILD_PROFILE={{profile}}" \
         -v=$(pwd):/run/src \
         --security-opt=label=disable \
         {{ARGS}} \
