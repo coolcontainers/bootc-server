@@ -8,8 +8,6 @@ tag := env("BUILD_TAG", branch)
 
 base := env("BUILD_BASE", "quay.io/fedora/fedora-bootc:" + branch)
 
-build_suffix := env("BUILD_BUILD_SUFFIX", "-build")
-
 # disk image build vars
 
 bib := env("BUILD_BIB", "quay.io/centos-bootc/bootc-image-builder:latest")
@@ -17,23 +15,34 @@ disk_type := env("BUILD_DISK_TYPE", "iso")
 bib_config := env("BUILD_BIB_CONFIG", "./bootc-image-builder.toml")
 rootfs := env("BUILD_ROOTFS", "btrfs")
 
-pull:
-    sudo podman pull {{base}}
-    sudo podman pull {{registry}}/{{image}}:{{tag}} || true
+[private]
+pull-base *ARGS:
+    podman pull {{ARGS}} {{base}}
+
+[private]
+pull-chunkah *ARGS:
+    podman pull {{ARGS}} quay.io/coreos/chunkah
+
+[private]
+pull-img *ARGS:
+    podman pull {{ARGS}} {{registry}}/{{image}}:{{tag}}
+
+[parallel]
+pull *ARGS: (pull-base ARGS) (pull-chunkah ARGS) (pull-img ARGS)
 
 build *ARGS:
-    sudo buildah bud \
+    buildah bud \
         --layers=true \
+        --skip-unused-stages=false \
+        --build-arg="CHUNKAH_CONFIG_STR=$(podman inspect {{registry}}/{{image}}:{{tag}})" \
+        -v=$(pwd):/run/src \
+        --security-opt=label=disable \
         {{ARGS}} \
-        -t "{{registry}}/{{image}}:{{tag}}{{build_suffix}}" \
+        -t "{{registry}}/{{image}}:{{tag}}" \
         "."
 
-rechunk *ARGS:
-    sudo podman run --rm --privileged -v /var/lib/containers:/var/lib/containers {{ARGS}} \
-        {{base}} \
-        /usr/libexec/bootc-base-imagectl rechunk \
-        {{registry}}/{{image}}:{{tag}}{{build_suffix}} \
-        {{registry}}/{{image}}:{{tag}}
+sign digest:
+    cosign sign -y --new-bundle-format=false --use-signing-config=false --key env://SIGNING_KEY "{{registry}}/{{image}}@{{digest}}"
 
 prepare_interactive:
     cp ./anaconda-interactive.toml "{{bib_config}}"
@@ -58,3 +67,7 @@ disk *ARGS:
             --type={{disk_type}} \
             --rootfs={{rootfs}} \
             "{{registry}}/{{image}}:{{tag}}"
+
+clean:
+    rm -r ./output
+    rm "{{bib_config}}"

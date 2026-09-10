@@ -37,11 +37,6 @@ jobs:
         id: build
         run: just build
 
-      - name: Rechunk
-        id: rechunk
-        run: |
-          just rechunk
-
       - name: Login to GHCR
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
