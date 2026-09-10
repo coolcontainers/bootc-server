@@ -1,6 +1,10 @@
 name: Installer ISO
 on:
   workflow_dispatch:
+    inputs:
+      profile:
+        required: true
+        type: string
 
 jobs:
   iso:
@@ -11,9 +15,10 @@ jobs:
 
     env:
       REPO_OWNER: ${{ github.repository_owner }}
-      BUILD_IMAGE: container
+      BUILD_IMAGE: ${{ profile }}-bootc
       BUILD_BRANCH: 44
       BUILD_TAG: 44
+      BUILD_PROFILE: ${{ profile }}
 
     steps:
       - name: Prepare environment

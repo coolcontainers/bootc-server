@@ -61,6 +61,7 @@ build *ARGS:
         {{ARGS}} \
         -t "{{registry}}/{{image}}:{{tag}}" \
         "."
+    [ -d out ] && rm -r out/
 
 sign digest:
     cosign sign -y --new-bundle-format=false --use-signing-config=false --key env://SIGNING_KEY "{{registry}}/{{image}}@{{digest}}"
