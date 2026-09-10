@@ -1,0 +1,14 @@
+[Container]
+ContainerName=pihole
+Image=docker.io/pihole/pihole:latest
+PublishPort=5353:53/tcp
+PublishPort=5353:53/udp
+PublishPort=10443:443
+Environment=FTLCONF_dns_listeningMode=all
+Volume=%h/.config/pihole:/etc/pihole:Z
+
+[Service]
+Restart=always
+
+[Install]
+WantedBy=default.target

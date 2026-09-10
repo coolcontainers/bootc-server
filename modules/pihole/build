@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+set -uexo pipefail
+
+install -Dm644 units/* -t /etc/containers/systemd/users/1000
