@@ -60,11 +60,11 @@ jobs:
           # HACK: push a second time so layer annotations are present
           # TODO: remove me when https://github.com/containers/podman/issues/27796 fixed
           for i in $(seq "${MAX_RETRIES}"); do
-            podman push --digestfile=/tmp/digestfile "$REGISTRY/$IMAGE:$TAG" && break || sleep $((5 * i));
+            podman push --digestfile=/tmp/digestfile --compression-format=zstd "$REGISTRY/$IMAGE:$TAG" && break || sleep $((5 * i));
           done
 
           for i in $(seq "${MAX_RETRIES}"); do
-            podman push --digestfile=/tmp/digestfile "$REGISTRY/$IMAGE:$TAG" && break || sleep $((5 * i));
+            podman push --digestfile=/tmp/digestfile --compression-format=zstd "$REGISTRY/$IMAGE:$TAG" && break || sleep $((5 * i));
           done
 
           echo "digest=$(< /tmp/digestfile)" | tee "${GITHUB_OUTPUT}"
