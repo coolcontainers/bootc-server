@@ -3,4 +3,4 @@
 set -xeuo pipefail
 
 install -Dm644 policy.json -t /etc/containers
-install -Dm644 container.yaml -t /etc/containers/registries.d
+install -Dm644 coolcontainers.yaml -t /etc/containers/registries.d

@@ -9,7 +9,7 @@ COPY profiles /profiles
 FROM quay.io/fedora/fedora-bootc:44 as builder
 ARG BUILD_PROFILE
 
-COPY cosign.pub /etc/pki/containers/container.pub
+COPY cosign.pub /etc/pki/containers/coolcontainers.pub
 
 RUN --mount=type=bind,from=ctx,source=/build_files,target=/ctx \
     --mount=type=bind,from=ctx,source=/modules,target=/ctx/modules \

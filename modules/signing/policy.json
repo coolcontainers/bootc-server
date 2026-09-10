@@ -20,10 +20,10 @@
                     "keyPath": "/etc/pki/rpm-gpg/RPM-GPG-KEY-redhat-release"
                 }
             ],
-            "ghcr.io/devil-star-cat/container": [
+            "ghcr.io/coolcontainers": [
                 {
                     "type": "sigstoreSigned",
-                    "keyPath": "/etc/pki/containers/container.pub",
+                    "keyPath": "/etc/pki/containers/coolcontainers.pub",
                     "signedIdentity": {
                         "type": "matchRepository"
                     }
