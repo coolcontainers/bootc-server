@@ -15,10 +15,10 @@ jobs:
 
     env:
       REPO_OWNER: ${{ github.repository_owner }}
-      BUILD_IMAGE: ${{ profile }}-bootc
+      BUILD_IMAGE: ${{ inputs.profile }}-bootc
       BUILD_BRANCH: 44
       BUILD_TAG: 44
-      BUILD_PROFILE: ${{ profile }}
+      BUILD_PROFILE: ${{ inputs.profile }}
 
     steps:
       - name: Prepare environment
