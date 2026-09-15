@@ -2,7 +2,7 @@
 <zone>
   <short>Custom</short>
   <service name="dhcpv6-client"/>
-  <port port="1022" protocol="tcp"/>
+  <port port="22" protocol="tcp"/>
   <port port="443" protocol="tcp"/>
   <rule family="ipv4">
     <forward-port port="443" protocol="tcp" to-port="8443"/>
