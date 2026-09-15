@@ -9,7 +9,9 @@ dnf -y install 'dnf5-command(copr)'
 dnf -y install qemu-guest-agent
 dnf -y install zram-generator-defaults
 dnf -y install tmux vim fish
-dnf -y install NetworkManager-ssh-selinux selinux-policy-targeted netcat
+dnf -y install netcat
+# selinux stuff
+dnf -y install NetworkManager-ssh-selinux selinux-policy-targeted policycoreutils-python-utils setroubleshoot-server
 
 modules=$(ls -1 /ctx/profiles/${BUILD_PROFILE}/)
 for m in $modules ; do
