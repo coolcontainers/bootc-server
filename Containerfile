@@ -16,7 +16,9 @@ RUN --mount=type=bind,from=ctx,source=/build_files,target=/ctx \
     --mount=type=bind,from=ctx,source=/profiles,target=/ctx/profiles \
     --mount=type=cache,target=/var/cache \
     /ctx/build && \
-    /ctx/cleanup && \
+    /ctx/cleanup
+
+RUN --mount=type=bind,from=ctx,source=/build_files,target=/ctx \
     /ctx/finalize
 
 RUN bootc container lint --no-truncate
