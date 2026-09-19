@@ -3,7 +3,7 @@ Description=PasarGuard Node container
 
 [Container]
 ContainerName=pasarguard-node
-Image=docker.io/pasarguard/node:v0.5.3
+Image=docker.io/pasarguard/node:v0.5.4
 Pod=pasarguard.pod
 EnvironmentFile=%h/.config/pasarguard-node.env
 Volume=pasarguard-node-volume.volume:/var/lib/pg-node
