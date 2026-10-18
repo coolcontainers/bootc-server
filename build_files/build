@@ -10,6 +10,8 @@ dnf -y install qemu-guest-agent
 dnf -y install zram-generator-defaults
 dnf -y install tmux vim fish
 dnf -y install netcat
+dnf -y install fwupd
+
 # selinux stuff
 dnf -y install NetworkManager-ssh-selinux selinux-policy-targeted policycoreutils-python-utils setroubleshoot-server
 
