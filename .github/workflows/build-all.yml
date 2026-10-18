@@ -14,7 +14,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        profile: ['proxy', 'rpi']
+        profile: ['proxy', 'rpi', 'nas']
 
     uses: ./.github/workflows/build.yml
     with:
