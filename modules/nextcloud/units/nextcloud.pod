@@ -1,0 +1,13 @@
+[Unit]
+Description=Nextcloud pod
+After=nextcloud-database-pod.service
+Wants=nextcloud-database-pod.service
+
+[Pod]
+PodName=nextcloud
+# Nextcloud Server
+UserNS=keep-id:uid=33,gid=33
+Network=nextcloud.network
+
+[Install]
+WantedBy=multi-user.target default.target
