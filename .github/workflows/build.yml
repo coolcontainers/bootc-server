@@ -7,7 +7,10 @@ on:
         type: string
       runner:
         required: true
-        type: string
+        type: choice
+        options:
+          - 'ubuntu-26.04'
+          - 'ubuntu-26.04-arm'
   workflow_call:
     inputs:
       profile:
