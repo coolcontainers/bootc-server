@@ -5,15 +5,21 @@ on:
       profile:
         required: true
         type: string
+      runner:
+        required: true
+        type: string
   workflow_call:
     inputs:
       profile:
         required: true
         type: string
+      runner:
+        required: true
+        type: string
 
 jobs:
   build:
-    runs-on: ubuntu-26.04
+    runs-on: ${{ inputs.runner }}
     permissions:
       packages: write
       contents: read
