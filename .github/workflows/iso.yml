@@ -5,10 +5,16 @@ on:
       profile:
         required: true
         type: string
+      runner:
+        required: true
+        type: choice
+        options:
+          - 'ubuntu-24.04'
+          - 'ubuntu-24.04-arm'
 
 jobs:
   iso:
-    runs-on: ubuntu-24.04
+    runs-on: ${{ inputs.runner }}
     permissions:
       packages: write
       contents: read
