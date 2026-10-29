@@ -14,7 +14,16 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        profile: ['proxy', 'nas', 'raspberry-pi']
+        profile:
+          # amd64
+          - name: 'proxy'
+            runner: 'ubuntu-26.04'
+          - name: 'nas'
+            runner: 'ubuntu-26.04'
+
+          # arm64
+          - name: 'raspberry-pi'
+            runner: 'ubuntu-26.04-arm'
 
     uses: ./.github/workflows/build.yml
     with:
