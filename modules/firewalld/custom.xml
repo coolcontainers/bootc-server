@@ -3,7 +3,7 @@
   <short>Custom</short>
   <service name="dhcpv6-client"/>
   <service name="cockpit"/>
-  <port port="443" protocol="tcp"/> <!-- proxy -->
+  <!-- <port port="443" protocol="tcp"/> <!-- proxy -->
   <port port="1022" protocol="tcp"/> <!-- pihole -->
   <port port="4443" protocol="tcp"/> <!-- yggdrasil -->
   <port port="8000" protocol="tcp"/> <!-- nextcloud -->
